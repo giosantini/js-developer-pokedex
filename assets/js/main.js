@@ -23,6 +23,11 @@ function convertPokemonToLi(pokemon) {
     `
 }
 
+function showPokemonAbilities(pokemon) {
+    
+    console.log(`Habilidades de ${pokemon.name}:`, pokemon.abilities);
+}
+
 function loadPokemonItens(offset, limit) {
     pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
         const newHtml = pokemons.map(convertPokemonToLi).join('')
@@ -45,3 +50,12 @@ loadMoreButton.addEventListener('click', () => {
         loadPokemonItens(offset, limit)
     }
 })
+
+pokemonList.addEventListener('click', (event) => {
+    const clickedPokemon = event.target.closest('.pokemon');
+    if (clickedPokemon) {
+        const pokemonId = clickedPokemon.id.split('-')[1];
+        const selectedPokemon = pokemonsDetails.find((pokemon) => pokemon.number === parseInt(pokemonId));
+        showPokemonAbilities(selectedPokemon);
+    }
+});
